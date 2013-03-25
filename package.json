@@ -5,8 +5,11 @@
   "author": "Zeno Rocha",
   "homepage": "https://github.com/zenorocha/jquery-github/",
   "version": "0.2.5",
+  
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.4.1",
+    "grunt-jasmine-task": "~0.2.3"
   },
   "scripts": {
     "test": "grunt travis --verbose"

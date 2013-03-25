@@ -3,7 +3,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     // Meta informations
-    pkg: '<json:package.json>',
+    // pkg: '<json:package.json>',
+    pkg: grunt.file.readJSON('package.json'),
+    
     meta: {
       banner: '/*\n' +
         ' *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
@@ -24,23 +26,32 @@ module.exports = function(grunt) {
     lint: {
       files: ['src/jquery.github.js']
     },
+
     jshint: {
       options: {
         multistr: true
       }
     },
 
+    jasmine : {
+      src : 'src/**/*.js',
+      options : {
+        specs : 'spec/*spec.js',
+        helpers: 'spec/helpers/*.js'
+      }
+    },
     // Minify definitions
-    min: {
+    minify: {
       dist: {
         src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
         dest: 'dist/jquery.github.min.js'
       }
     }
   });
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
 
-  grunt.registerTask('default', 'lint min concat');
+  grunt.registerTask('test', ['jshint', 'jasmine']);
+  grunt.registerTask('default', ['lint'], ['minify'], ['concat']);
   grunt.registerTask('travis', 'lint');
-  grunt.loadNpmTasks('grunt-jasmine-task');
 
 };
